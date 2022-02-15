@@ -1,4 +1,4 @@
-Introducing the FreshForks Google Analytics Dashboard - a dashboard for analysis using various Fusioncharts. 
+Introducing the FusionGrid Google Analytics Dashboard - a dashboard for analysis using various Fusioncharts. 
 
 Charts used (alias in brackets)
   - Dual Y Axis Combination chart (MSCombiDY2D)
