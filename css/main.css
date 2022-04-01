@@ -165,3 +165,7 @@
                  width: 100%;
                }
              }
+
+             .fg-grid-wrapper {
+              overflow-x: hidden;
+          }

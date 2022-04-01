@@ -1271,41 +1271,21 @@ var schema = [
 	},
 	{
 	  name: "Bounce Rate"	
+	},
+	{
+	  name: "Active"	
 	}
   ];
   
   var data = [
-	["July 1", "5470", "16447", "201.84", "50.91"],
-	["July 2", "2938", "7255", "179.73", " 54.27"],
-	["July 3", "2457", "5397", "166.64", "57.33"],
-	["July 4", "4946", "16040", "216", "48.96"],
-	["July 5", "5570", "16662", "211", "52.38"],
-	["July 6", "5379", "16595", "199", "51.66"],
-	["July 7", "5572", "17583", "211", "50.37"],
-	["July 8", "5212", "16140", "217", "51.08"],
-	["July 9", "2975", "7191", "172", "52.84"],
-	["July 10", "2476", "5089", "148", "58.03"],
-	["July 11", "5208", "15653", "206", "50.70"],
-	["July 12", "6269", "19735", "211", "50.95"],
-	["July 13", "5973", "18176", "210", "50.71"],
-	["July 14", "5913", "18354", "200", "50.72"],
-	["July 15", "5559", "16770", "193", "51.22"],
-	["July 16", "2705", "7206", "169", "53.35"],
-	["July 17", "2505", "5836", "180", "53.42"],
-	["July 18", "5420", "16460", "202", "51.82"],
-	["July 19", "5885", "18325", "193", "50.80"],
-	["July 20", "5919", "17868", "195", "50.87"],
-	["July 21", "6005", "18210", "197", "51.58"],
-	["July 22", "5418", "16039", "188", "49.64"],
-	["July 23", "3109", "7033", "160", "54.84"],
-	["July 24", "2670", "6017", "167", "53.55"],
-	["July 25", "5407", "16021", "204", "51.89"],
-	["July 26", "6183", "18867", "197", "51.43"],
-	["July 27", "6098", "18455", "195", "51.03"],
-	["July 28", "5955", "18168", "191", "52.33"],
-	["July 29", "5572", "18087", "202", "49.73"],
-	["July 30", "3143", "8407", "172", "52.71"],
-	["July 31", "2676", "6389", "176", "54.22"]
+	["July 1", "5470", "16447", "201.84", "50.91", "Y"],
+	["July 2", "2938", "7255", "179.73", " 54.27", "Y"],
+	["July 3", "2457", "5397", "166.64", "57.33", "Y"],
+	["July 4", "4946", "16040", "216", "48.96", "Y"],
+	["July 5", "5570", "16662", "211", "52.38", "Y"],
+	["July 6", "5379", "16595", "199", "51.66", "Y"],
+	["July 7", "5572", "17583", "211", "50.37", "Y"],
+	["July 8", "5212", "16140", "217", "51.08", "Y"]
   ];
   
   var container = document.getElementById("grid-container-for-card");
@@ -1313,8 +1293,94 @@ var schema = [
   var dataTable = dataStore.createDataTable(data, schema, {
 	enableIndex: false
   });
-  var grid = new FusionGrid(container, dataTable, {});
-  grid.render();
+
+  var grid = new FusionGrid(container, dataTable, {
+	columns: [
+		{
+		  headerName: "Event",
+		  children: [
+			{
+			  field: "Day"
+			},
+			{
+			  field: "Users"
+			}
+		  ]
+		},
+		{
+			headerName: "Others",
+			children: [
+			  {
+				field: "Page Views"
+			  },
+			  {
+				field:  "Session"
+			  },
+			  {
+				  field:  "Bounce Rate"	
+			  },
+			  {
+				  field: "Active"
+			  }
+			]
+		  }
+	],
+	layout: { density: "compact", autoHeight: true },
+	defaultColumnOptions: {
+	  searchable: true,
+	  sortable: true,
+	  filter: {
+		enable: true,
+		type: "conditional"
+	  }
+	},
+	rowOptions: {
+	  selection: {
+		rowSelection: "multiple",
+		enableSelectionCheckbox: true,
+	  }
+	},
+	pagination: {
+	  enable: true,
+	  showJumpToFirstPageButton: false,
+	  showJumpToLastPageButton: true,
+	  pageSize: {
+		default: 10,
+		options: true
+	  },
+	  showPages: {
+		enable: true,
+		showTotal: true,
+		userInput: true
+	  }
+	},
+  });
+      grid.render();
+
+
+document.getElementById("csv-btn").addEventListener("click", () => {
+	grid.export({ format: "csv" });
+  });
+  
+  document.getElementById("json-btn").addEventListener("click", () => {
+	console.log(grid.export({ format: "json" }));
+  });
+  
+  document.getElementById("xls-btn").addEventListener("click", () => {
+	grid.export({ format: "csv" });
+  });
+  
+  document.getElementById("getCSVData-btn").addEventListener("click", () => {
+	console.log(grid.getCSVData());
+  });
+  
+  document.getElementById("mode-view-btn").addEventListener("click", () => {
+	grid.export({ format: "csv", mode: "view" });
+  });
+  
+  document.getElementById("no-skip-btn").addEventListener("click", () => {
+	grid.export({ format: "csv", mode: "view", skipColumnHeaderGroups: false });
+  });
 //   dataTable.getDataStore().updateRow(1, ["ZYKOVA Yulia", "ROC", "Shooting"]);
 //   grid.refreshCells();
   
